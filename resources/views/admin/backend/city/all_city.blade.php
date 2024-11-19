@@ -77,7 +77,7 @@
                 </div>
                 <div class="modal-body">
 
-  <form id="myForm" action="{{ route('city.update') }}" method="post" enctype="multipart/form-data">
+  <form id="myForm" action="{{ route('city.store') }}" method="post" enctype="multipart/form-data">
            @csrf
                         
 <div class="row">
