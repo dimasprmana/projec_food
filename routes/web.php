@@ -35,6 +35,12 @@ Route::middleware('auth')->group(function () {
     // Get Wishlist data for user 
     Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
     Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
+
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/user/order/list', 'UserOrderList')->name('user.order.list'); 
+        Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
+        Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download'); 
+    });
    
 });
 
@@ -182,6 +188,11 @@ Route::middleware(['client','status'])->group(function () {
         
     });
     
+    Route::controller(ManageOrderController::class)->group(function(){
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders'); 
+        Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details'); 
+    });
+
     
 });
  // End Client Middleware
