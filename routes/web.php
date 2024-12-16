@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Admin\ManageOrderController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Frontend\ReviewController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -40,6 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/order/list', 'UserOrderList')->name('user.order.list'); 
         Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
         Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download'); 
+        
     });
    
 });
@@ -143,6 +147,20 @@ Route::middleware('admin')->group(function () {
         Route::get('/processing_to_deliverd/{id}', 'ProcessingToDiliverd')->name('processing_to_deliverd'); 
         
     });
+
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('/admin/all/reports', 'AminAllReports')->name('admin.all.reports'); 
+        Route::post('/admin/search/bydate', 'AminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear');
+    });
+
+    Route::controller(ReviewController::class)->group(function(){
+        Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
+        Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review'); 
+        Route::get('/reviewchangeStatus', 'ReviewChangeStatus'); 
+        
+    });
  
     
 }); // End Admin Middleware
@@ -193,6 +211,17 @@ Route::middleware(['client','status'])->group(function () {
         Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details'); 
     });
 
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports'); 
+        Route::post('/client/search/bydate', 'ClientSearchByDate')->name('client.search.bydate');
+        Route::post('/client/search/bymonth', 'ClientSearchByMonth')->name('client.search.bymonth');
+        Route::post('/client/search/byyear', 'ClientSearchByYear')->name('client.search.byyear');
+    });
+
+    Route::controller(ReviewController::class)->group(function(){
+        Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews'); 
+        
+    });
     
 });
  // End Client Middleware
@@ -218,4 +247,9 @@ Route::controller(CartController::class)->group(function(){
 Route::controller(OrderController::class)->group(function(){
     Route::post('/cash_order', 'CashOrder')->name('cash_order');
    
+});
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::post('/store/review', 'StoreReview')->name('store.review');  
+    
 });
