@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -34,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('/change/password', [UserController::class, 'ChangePassword'])->name('change.password');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
-    
+
     // Get Wishlist data for user 
     Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
     Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
@@ -42,12 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(ManageOrderController::class)->group(function(){
         Route::get('/user/order/list', 'UserOrderList')->name('user.order.list'); 
         Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
-        Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download'); 
-        
+        Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download');
     });
-   
-});
 
+});
 
 require __DIR__.'/auth.php';
 
@@ -79,7 +76,7 @@ Route::middleware('client')->group(function () {
     Route::get('/client/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
     Route::post('/client/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
     
-}); 
+});
 
 Route::get('/client/login', [ClientController::class, 'ClientLogin'])->name('client.login');
 Route::get('/client/register', [ClientController::class, 'ClientRegister'])->name('client.register');
@@ -88,6 +85,7 @@ Route::post('/client/login_submit', [ClientController::class, 'ClientLoginSubmit
 Route::get('/client/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
 
 /// All Admin Category 
+
 Route::middleware('admin')->group(function () {
 
     Route::controller(CategoryController::class)->group(function(){
@@ -115,18 +113,19 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/edit/product/{id}', 'AdminEditProduct')->name('admin.edit.product');
         Route::post('/admin/update/product', 'AdminUpdateProduct')->name('admin.product.update');
         Route::get('/admin/delete/product/{id}', 'AdminDeleteProduct')->name('admin.delete.product');
+        
+    });
+
+    Route::controller(ManageController::class)->group(function(){
+        Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
+        Route::get('/clientchangeStatus', 'ClientChangeStatus'); 
+        Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant'); 
        
     });
 
     Route::controller(ManageController::class)->group(function(){
-        Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant'); 
-        Route::get('/clientchangeStatus', 'ClientChangeStatus'); 
-        Route::get('/approve/restaurant', 'ApproveRestaurant')->name('approve.restaurant'); 
-    });
-
-    Route::controller(ManageController::class)->group(function(){
-        Route::get('/all/banner', 'AllBanner')->name('all.banner'); 
-        Route::post('/banner/store', 'BannerStore')->name('banner.store'); 
+        Route::get('/all/banner', 'AllBanner')->name('all.banner');
+        Route::post('/banner/store', 'BannerStore')->name('banner.store');
         Route::get('/edit/banner/{id}', 'EditBanner');
         Route::post('/banner/update', 'BannerUpdate')->name('banner.update'); 
         Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner'); 
@@ -136,7 +135,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/pending/order', 'PendingOrder')->name('pending.order'); 
         Route::get('/confirm/order', 'ConfirmOrder')->name('confirm.order'); 
         Route::get('/processing/order', 'ProcessingOrder')->name('processing.order'); 
-        Route::get('/deliverd/order', 'DeliverdOrder')->name('deliverd.order'); 
+        Route::get('/deliverd/order', 'DeliverdOrder')->name('deliverd.order');
 
         Route::get('/admin/order/details/{id}', 'AdminOrderDetails')->name('admin.order.details');  
     });
@@ -149,16 +148,16 @@ Route::middleware('admin')->group(function () {
     });
 
     Route::controller(ReportController::class)->group(function(){
-        Route::get('/admin/all/reports', 'AminAllReports')->name('admin.all.reports'); 
+        Route::get('/admin/all/reports', 'AminAllReports')->name('admin.all.reports');
         Route::post('/admin/search/bydate', 'AminSearchByDate')->name('admin.search.bydate');
         Route::post('/admin/search/bymonth', 'AminSearchByMonth')->name('admin.search.bymonth');
-        Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear');
+        Route::post('/admin/search/byyear', 'AminSearchByYear')->name('admin.search.byyear'); 
     });
 
     Route::controller(ReviewController::class)->group(function(){
         Route::get('/admin/pending/review', 'AdminPendingReview')->name('admin.pending.review');
         Route::get('/admin/approve/review', 'AdminApproveReview')->name('admin.approve.review'); 
-        Route::get('/reviewchangeStatus', 'ReviewChangeStatus'); 
+        Route::get('/reviewchangeStatus', 'ReviewChangeStatus');  
         
     });
  
@@ -193,7 +192,6 @@ Route::middleware(['client','status'])->group(function () {
         Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
         Route::post('/update/gallery', 'UpdateGallery')->name('gallery.update');
         Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
-        
     });
 
     Route::controller(CouponController::class)->group(function(){
@@ -205,9 +203,9 @@ Route::middleware(['client','status'])->group(function () {
         Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
         
     });
-    
+
     Route::controller(ManageOrderController::class)->group(function(){
-        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders'); 
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
         Route::get('/client/order/details/{id}', 'ClientOrderDetails')->name('client.order.details'); 
     });
 
@@ -222,6 +220,7 @@ Route::middleware(['client','status'])->group(function () {
         Route::get('/client/all/reviews', 'ClientAllReviews')->name('client.all.reviews'); 
         
     });
+
     
 });
  // End Client Middleware
@@ -230,7 +229,7 @@ Route::middleware(['client','status'])->group(function () {
  Route::get('/changeStatus', [RestaurantController::class, 'ChangeStatus']);
 
  Route::controller(HomeController::class)->group(function(){
-    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details'); 
+    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('res.details');
     Route::post('/add-wish-list/{id}', 'AddWishList'); 
     
 });
